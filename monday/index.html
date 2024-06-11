@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+
+        // fetches user 1 and displays their email
+        let element = document.querySelector("#messageArea");
+        fetch("http://jsonplaceholder.typicode.com/users/1")
+            .then(response => response.json())
+            .then(data => {
+                let message = "User email: " + data.email;
+                element.innerHTML = message
+            });
+
+        // fetches all users and places their names and emails
+        // in a table
+        let table = document.getElementById("userTable");
+        fetch("http://jsonplaceholder.typicode.com/users")
+            .then(response => response.json())
+            .then(data => {
+                for (let i = 0; i < data.length; i++) {
+                    let row = table.insertRow(-1);
+                    let cell1 = row.insertCell(0);
+                    let cell2 = row.insertCell(1);
+                    cell1.innerHTML = data[i].name;
+                    cell2.innerHTML = data[i].email;
+                }
+            });
+
+        //the first then() 
+        //-resolves the promise to a response and uses the response's json() method
+        //to convert the json in the response to a promise that resolves to a JS object
+
+        //the second then()
+        //- resolves the promise to the js object and names it data. uses the data object 
+        //to display the returned json data 
+
+        ////////////////////////////////////POST///////////////////////////////////////////////
+        fetch(endpointUrl, {
+            method: "POST",
+            body: bodyData,
+            headers: {
+                "Content-type":
+                    "application/json; charset=UTF-8"
+            }
+        })
+            .then(response => response.json())
+            .then(json => {
+                // If the POST finishes successfully, ...
+            });
+             .catch (err => {
+            // If the POST returns an error, ...
+        });
+
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        // Create JSON object to include in the request body
+        let bodyData = {
+            id: document.getElementById("stuIdField").value,
+            name: document.getElementById("stuNameField").value,
+            classification:
+                document.getElementById("stuClassField").value,
+        }
+        // Send the request
+        fetch("http://www.some-url.com/api/students", {
+            method: "POST",
+            body: JSON.stringify(bodyData),
+            headers: {
+                "Content-type":
+                    "application/json; charset=UTF-8"
+            }
+        })
+            .then(response => response.json())
+            .then(json => {
+                // If the POST finishes successfully, display a message
+                let confirmationMessage =
+                    document.getElementById(confirmationMessage);
+                confirmationMessage.innerHTML = "New student added";
+            });
+        .catch (err => {
+            // If the POST returns an error, display a message
+            let confirmationMessage =
+                document.getElementById(confirmationMessage);
+            confirmationMessage.innerHTML = "Unexpected error";
+        });
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+
+        // Create JSON object to include in the request body
+        let bodyData = {
+            id: "",
+            name: document.getElementById("stuNameField").value,
+            classification:
+                document.getElementById("stuClassField").value,
+        }
+        // Send the request
+        fetch("http://www.some-url.com/api/students", {
+            method: "POST",
+            body: JSON.stringify(bodyData),
+            headers: {
+                "Content-type":
+                    "application/json; charset=UTF-8"
+            }
+        })
+            .then(response => response.json())
+            .then(json => {
+                // If the POST finishes successfully, display a message
+                // with the newly assigned id
+                let message = "Student " + json.id + " added";
+                let confirmationMessage =
+                    document.getElementById(confirmationMessage);
+                confirmationMessage.innerHTML = message;
+            });
+        .catch (err => {
+            // If the POST returns an error, display a message
+            let confirmationMessage =
+                document.getElementById(confirmationMessage);
+            confirmationMessage.innerHTML = "Unexpected error";
+        });
+        ///////////////////////////////////////////////////////PUT///////////////////////////////
+
+        fetch(endpointUrl, {
+            method: "PUT",
+            body: bodyData,
+            headers: {
+                "Content-type":
+                    "application/json; charset=UTF-8"
+            }
+        })
+            .then(response => response.json())
+            .then(json => {
+                // If the PUT finishes successfully, ...
+            });
+        .catch (err => {
+            // If the PUT returns an error, ...
+        });
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function btnGetClicked() {
+            // fetch student #1 (hard-coded) to be updated
+            fetch("http://www.some-url.com/api/student/1")
+                .then(response => response.json())
+                .then(data => {
+                    // and put returned data in form for editing
+                    let stuIdField =
+                        document.getElementById("stuIdField");
+                    stuIdField.value = data.name;
+                    let stuNameField =
+                        document.getElementById("stuNameField");
+                    stuNameField.value = data.id;
+                    let stuClassField =
+                        document.getElementById("stuClassField");
+                    stuClassField.value = data.classification;
+                });
+        }
+        function btnUpdateClicked() {
+            // send PUT (update) request w/ edited data
+            let bodyData = {
+                id: document.getElementById("stuIdField").value,
+                name: document.getElementById("stuNameField").value,
+                classification:
+                    document.getElementById("stuClassField").value,
+            }
+
+        }
+        fetch("http://www.some-url.com/api/students", {
+            method: "PUT",
+            body: JSON.stringify(bodyData),
+            headers: {
+                "Content-type":
+                    "application/json; charset=UTF-8"
+            }
+        })
+            .then(response => response.json())
+            .then(json => {
+                // If the PUT is successful, display a message
+                let confirmationMessage =
+                    document.getElementById(confirmationMessage);
+                confirmationMessage.innerHTML = "Student updated";
+            });
+        .catch (err => {
+            // If the PUT returns an error, display a message
+            let confirmationMessage =
+                document.getElementById(confirmationMessage);
+            confirmationMessage.innerHTML = "Unexpected error";
+        }
+        //////////////////////////////////////////DELETE.///////////////////////////////////
+
+        fetch("endpointUrl", {
+            method: "DELETE"
+        })
+            .then(response => response.json())
+            .then(json => {
+                // If the DELETE finishes successfully, ...
+            });
+        .catch (err => {
+            // If the DELETE returns an error, ...
+        });
+
+
+
+
+        // The user should enter the id in stuIdField before
+        // clicking GET button
+        let id = "";
+        function btnGetClicked() {
+            // fetch student to decide if it should
+            // be deleted
+            id = document.getElementById("stuIdField").value;
+            fetch("http://www.some-url.com/api/student/" + id)
+                .then(response => response.json())
+                .then(data => {
+                    // and display returned data in a div
+                    let stuDetails = "ID: " + data.id +
+                        " Name: " + data.name +
+                        " Classification: " + data.classification;
+                    let studentDetailsDiv =
+                        document.getElementById(studentDetailsDiv);
+                    studentDetailsDiv.innerHTML = stuDetails;
+                });
+        }
+        function btnDeleteClicked() {
+            // send DELETE request w/ id as part of URL
+            fetch("http://www.some-url.com/api/students/" + id, {
+                method: "DELETE"
+            })
+                .then(response => response.json())
+                .then(json => {
+                    // If the DELETE is successful, display a message
+                    let confirmationMessage =
+                        document.getElementById(confirmationMessage);
+                    confirmationMessage.innerHTML = "Student deleted";
+                });
+            .catch (err => {
+                // If the DELETE returns an error, display a message
+                let confirmationMessage =
+                    document.getElementById(confirmationMessage);
+                confirmationMessage.innerHTML = "Unexpected error.";
+            });
+        }
+
+
+    </script>
+</body>
+
+</html>
