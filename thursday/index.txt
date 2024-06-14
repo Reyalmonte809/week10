@@ -35,11 +35,6 @@ var functionName = (parameter1, parameter2) => {
 };
 These are just different syntaxes for achieving the same result. The choice between them often depends on personal preference and specific use cases.
 
-
-You
-how do you know what are the next steps in a function
-ChatGPT
-ChatGPT
 Understanding the next steps in a function involves following the flow of code within the function body. Here's a breakdown of how to identify the next steps:
 
 Start with the Function Definition: Look at the function declaration or expression. This gives you the name of the function and the parameters it expects.
@@ -58,3 +53,10 @@ By following these steps and understanding the code within the function body, yo
 
 
 https://dev.mysql.com/downloads/mysql/
+
+
+
+
+
+
+final capstone idea maybe a anime blog capstone
